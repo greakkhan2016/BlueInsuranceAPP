@@ -29,14 +29,9 @@ namespace Service
             return result;
         }
 
-        /// <summary>
-        /// List of students that are registered for the course
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>List of students</returns>
-        public List<RegisterStudentsAttendingCourseRequest> ListStudentsAttendingCourse(int id)
+        public List<RegisterStudentsAttendingCourseRequest> ListStudentsAttendingCourse(int courseId)
         {
-            var result = _courseRepository.GetStudentsAttendingCourse(id);
+            var result = _courseRepository.GetStudentsAttendingCourse(courseId);
             return result;
         }
 

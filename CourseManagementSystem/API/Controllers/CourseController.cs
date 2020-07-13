@@ -9,6 +9,7 @@ using ViewModel;
 
 namespace API.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : ControllerBase
@@ -41,14 +42,36 @@ namespace API.Controllers
         [HttpPost(Name = nameof(RegisterStudentForCourse))]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<bool>>RegisterStudentForCourse([FromBody] RegisterStudentForCourseRequest registerStudent)
+        public async Task<ActionResult<bool>> RegisterStudentForCourse([FromBody] RegisterStudentForCourseRequest registerStudent)
         {
             try
             {
                 var result = await _courseService.RegisterStudentForCourseAsync(registerStudent);
                 return Ok(result);
             }
-            catch(StudentCourseRegistrationException cex)
+            catch (StudentCourseRegistrationException cex)
+            {
+                var response = new Response(cex.Message);
+                return BadRequest(response);
+            }
+        }
+
+        /// <summary>
+        /// Gets list of students in a course
+        /// </summary>
+        /// <returns>Returns list of students in a course</returns>
+        [HttpGet("{id}", Name = nameof(ListStudentsRegisterForCourse))]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+
+        public  ActionResult ListStudentsRegisterForCourse(int id)
+        {
+            try
+            {
+                var result =  _courseService.ListStudentsAttendingCourse(id);
+                return Ok(result);
+            }
+            catch (StudentCourseRegistrationException cex)
             {
                 var response = new Response(cex.Message);
                 return BadRequest(response);

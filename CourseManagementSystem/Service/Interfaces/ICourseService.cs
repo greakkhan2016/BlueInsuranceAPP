@@ -7,7 +7,7 @@ namespace Service.Interfaces
     public interface ICourseService
     {
         CoursesAvailableCountRequest CoursesAvailableCount();
-        List<RegisterStudentsAttendingCourseRequest> ListStudentsAttendingCourse(int id);
+        List<RegisterStudentsAttendingCourseRequest> ListStudentsAttendingCourse(int courseId);
         Task<bool> RegisterStudentForCourseAsync(RegisterStudentForCourseRequest registerStudent);
         
     }
