@@ -16,6 +16,11 @@ namespace Persistence
     {
         public CourseRepository(DataContext context) : base(context){}
 
+        /// <summary>
+        /// Gets Course Information
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns>Course</returns>
         public Course GetCourseInformation(int courseId)
         {
             return _context
@@ -23,6 +28,10 @@ namespace Persistence
                 .FirstOrDefault(c => c.CourseId == courseId);
         }
 
+        /// <summary>
+        /// Gets all courses that have space avaiabale
+        /// </summary>
+        /// <returns>Avalaible Courses</returns>
         public CoursesAvailableCountRequest GetCoursesAvailableCount()
         { 
             var result = EfCoreExtentions
@@ -76,6 +85,13 @@ namespace Persistence
             }
         }
 
+        /// <summary>
+        /// Save student registeration for the course
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="registerStudent"></param>
+        /// <param name="student"></param>
+        /// <returns></returns>
         public async Task<bool> SaveRegisterationOfStudentForCourse(Course course, RegisterStudentForCourseRequest registerStudent, Student student)
         {
             var enrollment = new Enrollment
@@ -93,6 +109,11 @@ namespace Persistence
             return success;
         }
 
+        /// <summary>
+        /// Increments student number count for amount of subjects studying
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns></returns>
         private async Task IncrementStudentSubjectCount(Student student)
         {
             student.SubjectCount += 1;
@@ -106,6 +127,11 @@ namespace Persistence
             }
         }
 
+        /// <summary>
+        /// Increments the course encrollment count
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         private async Task IncrementCourseCountAsync(Course course)
         {
              course.Enrolled += 1;

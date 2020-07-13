@@ -2,7 +2,6 @@
 using Persistence.Entities;
 using Persistence.Exceptions;
 using Persistence.Interfaces;
-using Persistence.Migrations;
 using Service;
 using System.Collections.Generic;
 using System.Threading.Tasks;

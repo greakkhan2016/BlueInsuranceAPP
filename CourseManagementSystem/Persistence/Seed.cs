@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Persistence
 {
+    /// <summary>
+    /// Needs the database with some data if corresponding table has no data
+    /// </summary>
     public class Seed
     {
         public static void SeedData(DataContext context)
