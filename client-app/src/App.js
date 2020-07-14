@@ -1,5 +1,5 @@
 import React from 'react';
-import SimpleTable from './demo';
+import SimpleTable from './StudentsRegistered';
 import './App.css';
 
 function App() {

@@ -25,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleTable() {
-
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   const [result, setResults] = useState([]);
   const classes = useStyles();
   useEffect(() => {
@@ -61,7 +59,7 @@ export default function SimpleTable() {
               <TableRow key={row.name}>
                 <TableCell align="center">{row.firstName}</TableCell>
                 <TableCell align="center">{row.lastName}</TableCell>
-                <TableCell align="center">{row.dateOfBirth.toLocaleDateString('de-DE',options)}</TableCell>
+                <TableCell align="center">{row.dateOfBirth}</TableCell>
                 <TableCell align="center">
                 {row.address1} {row.address2} {row.address3}
                 </TableCell>
