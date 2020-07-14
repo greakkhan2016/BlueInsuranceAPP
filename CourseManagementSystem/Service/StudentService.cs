@@ -1,6 +1,8 @@
 ﻿using Persistence.Interfaces;
 using Service.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ViewModel;
 
 namespace Service
@@ -21,6 +23,12 @@ namespace Service
         public StudentDidNotRegisterMaxAmountRequest DidNotRegisterMaxCourseAmount()
         {
             var result = _studentRepository.DidNotRegisterMaxCourseAmount();
+            return result;
+        }
+
+        public async Task<IEnumerable<AllStudentsRecordRequest>> GetAllStudentInSystem()
+        {
+            var result = await _studentRepository.GetAllStudents();
             return result;
         }
     }

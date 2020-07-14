@@ -64,7 +64,7 @@ namespace API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
 
-        public  ActionResult ListStudentsRegisterForCourse(int id)
+        public ActionResult ListStudentsRegisterForCourse(int id)
         {
             try
             {

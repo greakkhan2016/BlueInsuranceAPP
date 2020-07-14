@@ -45,6 +45,17 @@ namespace API
                 opt.UseSqlServer(connection);
             });
 
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:3000");
+                });
+            });
+
             services.AddMvc(setup => {
                
             }).AddFluentValidation();
@@ -61,6 +72,8 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

@@ -1,6 +1,7 @@
 ﻿using Persistence.Entities;
 using Persistence.Exceptions;
 using System.Linq;
+using ViewModel;
 
 namespace Service
 {
@@ -36,6 +37,5 @@ namespace Service
             }
             return course;
         }
-
     }
 }

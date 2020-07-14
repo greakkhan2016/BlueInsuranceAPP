@@ -1,60 +1,75 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table,
+  Paper,
+} from "@material-ui/core/";
+import Typography from "@material-ui/core/Typography";
+import axios from "axios";
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
   },
-});
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+}));
 
 export default function SimpleTable() {
+
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const [result, setResults] = useState([]);
   const classes = useStyles();
+  useEffect(() => {
+    axios
+      .get("https://localhost:44395/Student/ListAllStudentInSystem")
+      .then((response) => {
+        console.log(response);
+        setResults(response.data);
+      });
+  }, []);
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+    <div>
+      <Typography variant="h4">Students Registered in the System</Typography>
+      <TableContainer
+        className={classes.paper}
+        component={Paper}
+        size="small"
+        width="small"
+      >
+        <Table size="small" align="center" aria-label="Students in the System">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">FirstName</TableCell>
+              <TableCell align="center">LastName</TableCell>
+              <TableCell align="center">Date Of Birth</TableCell>
+              <TableCell align="center">Address</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {result.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell align="center">{row.firstName}</TableCell>
+                <TableCell align="center">{row.lastName}</TableCell>
+                <TableCell align="center">{row.dateOfBirth.toLocaleDateString('de-DE',options)}</TableCell>
+                <TableCell align="center">
+                {row.address1} {row.address2} {row.address3}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

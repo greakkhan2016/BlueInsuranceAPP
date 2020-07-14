@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Persistence.Entities;
 using Service.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     [Produces("application/json")]
     public class StudentController : ControllerBase
     {
@@ -31,5 +34,16 @@ namespace API.Controllers
             var result = _studentService.DidNotRegisterMaxCourseAmount();
             return Ok(result);
         }
+
+
+        [HttpGet(Name = nameof(ListAllStudentInSystem))]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<IEnumerable<Student>>> ListAllStudentInSystem()
+        {
+            var result = await _studentService.GetAllStudentInSystem();
+            return Ok(result);
+        }
+
     }
 }

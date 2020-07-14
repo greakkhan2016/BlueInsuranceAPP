@@ -2,6 +2,8 @@
 using Persistence.Entities;
 using Persistence.Extensions;
 using Persistence.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ViewModel;
 
@@ -24,6 +26,26 @@ namespace Persistence
             { 
                 Count = result 
             };
+        }
+
+        public async Task<IEnumerable<AllStudentsRecordRequest>> GetAllStudents()
+        { 
+            var result = await _context.Student.ToListAsync();
+
+            var registerdStudentInfo =
+                (from student in result
+                 select new AllStudentsRecordRequest
+                 {
+                     FirstName = student.FirstName,
+                     LastName = student.SurName,
+                     DateOfBirth = student.DateOfBirth,
+                     Address1 = student.Address1,
+                     Address2 = student.Address2,
+                     Address3 = student.Address3
+                 }
+                    ).ToList();
+
+           return registerdStudentInfo; 
         }
 
         /// <summary>
